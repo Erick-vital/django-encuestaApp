@@ -1,0 +1,11 @@
+<h2>{{ pregunta.texto_pregunta }}</h2>
+<h4 style="font-size: large;"> resultados: </h4>
+<ul>
+    {% for eleccion in pregunta.eleccion_set.all %}
+    <li>
+        {{ eleccion.eleccion_texto}} -- {{ eleccion.votos }}votos
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'detail' pregunta.id %}">volver a votar</a>

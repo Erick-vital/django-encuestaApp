@@ -1,0 +1,22 @@
+<h2>ultimas preguntas realizadas</h2>
+
+{% if preguntas_set %}
+        <ul>
+            {% for pregunta in preguntas_set %}
+            <li>
+                <!--el 'detail' lo estamos tomando de urls.py-->
+                <a href="{% url 'detail' pregunta.id %}">{{pregunta.texto_pregunta}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+{% else %}
+    <p>no preguntas disponibles</p>
+{% endif %}
+
+<!-- forma 'brusca' de mandar el link--
+    The problem with this hardcoded, tightly-coupled
+    approach is that it becomes challenging to change URLs 
+    on projects with a lot of templates
+
+<a href="/encuesta/{{pregunta.id}}/">{{pregunta.texto_pregunta}}</a>
+-->

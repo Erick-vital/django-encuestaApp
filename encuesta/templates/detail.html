@@ -1,0 +1,17 @@
+<h3>{{ pregunta.texto_pregunta }}</p>
+
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'voto' pregunta.id %}" method="POST">
+{% csrf_token %}
+{% for eleccion in pregunta.eleccion_set.all %}
+    <input type="radio" name="eleccion" id="eleccion{{ forloop.counter }}"
+    value="{{ eleccion.id }}">
+    <label for="eleccion{{ forloop.counter }}">{{ eleccion.eleccion_texto }}</label>
+    <br>
+{% endfor %}
+<input type="submit" value="vote">
+</form>
+
+<a href="{% url 'index'%}">preguntas</a>
