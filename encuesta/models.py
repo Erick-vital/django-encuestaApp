@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+import datetime
 
 # Create your models here.
 """ un modelo es la mayor fuenta de
@@ -20,6 +22,10 @@ class Pregunta(models.Model):
         datos_pregunta = texto %(
             self.texto_pregunta, self.fecha_publicacion)
         return datos_pregunta
+    
+    def fue_publicado_recientemente(self):
+        ahora = timezone.now().date()
+        return ahora - datetime.timedelta(days=1) <= self.fecha_publicacion <= ahora 
 
 class Eleccion(models.Model):
     """ con el metodo 'foreignkey' estamos

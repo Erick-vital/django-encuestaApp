@@ -1,28 +1,33 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Pregunta, Eleccion
-
 #importa reverse
 from django.urls import reverse
+#import las vistas genericas
+from django.views import generic
+
 
 # Create your views here.
-def index(request):
-    preguntas_set = Pregunta.objects.all()
-    contexto = {'preguntas_set':preguntas_set}
-    return render(request, 'index.html', contexto)
+""" vistas basadas en clases, cada clase es una vista
+    donde podemos agregar diferentes 'metodos' a cada clase
+    en ves de tener todo nuestro codigo dentro de una funcion
+"""
 
+class IndexView(generic.ListView):
+    template_name = 'index.html'
+    context_object_name = 'preguntas_set'
 
-def detail(request, pregunta_id):
-    pregunta = get_object_or_404(Pregunta, pk=pregunta_id)
-    contexto = {'pregunta':pregunta}
-    
-    return render(request, 'detail.html', contexto)
+    def get_queryset(self):
+        #devuleve el set, 'las preguntas del modelo'
+        return Pregunta.objects.all()
 
-def resultados(request, pregunta_id):
-    pregunta = get_object_or_404(Pregunta, pk=pregunta_id)
+class DetailView(generic.DetailView):
+    model = Pregunta
+    template_name = 'detail.html'
 
-    return render(request, 'resultados.html', {
-        'pregunta':pregunta})
+class ResultadosView(generic.DetailView):
+    model = Pregunta
+    template_name = 'resultados.html'
 
 def voto(request, pregunta_id):
     pregunta = get_object_or_404(Pregunta, pk=pregunta_id)
@@ -40,5 +45,5 @@ def voto(request, pregunta_id):
         pregunta_actual.save()
 
         return HttpResponseRedirect(
-            reverse('resultados', args=(pregunta.id,)))
+            reverse('encuesta:resultados', args=(pregunta.id,)))
 

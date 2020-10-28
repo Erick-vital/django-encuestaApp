@@ -5,16 +5,16 @@ from . import views
     a las demas vistas, solo es para variar
     un poco la forma de escribir los url
 """
-
+app_name= 'encuesta'
 urlpatterns = [ 
     # /encuesta/
-    path('', views.index, name='index'),
+    path('', views.IndexView.as_view(), name='index'),
     # /encuesta/id/
-    path('<int:pregunta_id>/', views.detail, name='detail'),
+    path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     # /encuesta/id/resultados/
-    path('<int:pregunta_id>/resultados/', views.resultados, name='resultados'),
+    path('<int:pk>/resultados/', views.ResultadosView.as_view(), name='resultados'),
     # /encuesta/id/voto
-    path('<int:pregunta_id>/voto', views.voto, name='voto' ),
+    path('<int:pregunta_id>/voto', views.voto, name='voto'),
 ]
 
 """ 'pregunta_id' es tomada de los parametros

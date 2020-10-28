@@ -1,3 +1,10 @@
+<!-- para mas informaciones de los template tags '{}'
+    un template tag es todo el codigo escrito dentro de {} esto
+
+    documentacion template tags:
+    https://docs.djangoproject.com/en/3.1/ref/templates/builtins/
+-->
+
 <h2>ultimas preguntas realizadas</h2>
 
 {% if preguntas_set %}
@@ -5,7 +12,7 @@
             {% for pregunta in preguntas_set %}
             <li>
                 <!--el 'detail' lo estamos tomando de urls.py-->
-                <a href="{% url 'detail' pregunta.id %}">{{pregunta.texto_pregunta}}</a>
+                <a href="{% url 'encuesta:detail' pregunta.id %}">{{pregunta.texto_pregunta}}</a>
             </li>
             {% endfor %}
         </ul>
@@ -19,4 +26,7 @@
     on projects with a lot of templates
 
 <a href="/encuesta/{{pregunta.id}}/">{{pregunta.texto_pregunta}}</a>
+
+documentacion detallada de como funciona esta busqueda:
+https://docs.djangoproject.com/en/3.1/topics/http/urls/#topics-http-reversing-url-namespaces
 -->
